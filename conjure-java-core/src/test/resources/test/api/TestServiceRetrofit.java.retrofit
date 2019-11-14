@@ -73,6 +73,7 @@ public interface TestServiceRetrofit {
         "hr-path-template: /catalog/datasets/{datasetRid}/raw-maybe",
         "Accept: application/octet-stream"
     })
+    @Streaming
     Call<Optional<ResponseBody>> maybeGetRawData(
             @Header("Authorization") AuthHeader authHeader,
             @Path("datasetRid") ResourceIdentifier datasetRid);

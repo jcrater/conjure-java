@@ -24,11 +24,13 @@ public interface EteBinaryServiceRetrofit {
 
     @GET("./binary/optional/present")
     @Headers({"hr-path-template: /binary/optional/present", "Accept: application/octet-stream"})
+    @Streaming
     Call<Optional<ResponseBody>> getOptionalBinaryPresent(
             @Header("Authorization") AuthHeader authHeader);
 
     @GET("./binary/optional/empty")
     @Headers({"hr-path-template: /binary/optional/empty", "Accept: application/octet-stream"})
+    @Streaming
     Call<Optional<ResponseBody>> getOptionalBinaryEmpty(
             @Header("Authorization") AuthHeader authHeader);
 
