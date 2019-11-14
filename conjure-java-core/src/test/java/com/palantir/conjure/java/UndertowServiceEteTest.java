@@ -401,20 +401,20 @@ public final class UndertowServiceEteTest extends TestBase {
 
     @Test
     public void testBinaryOptionalEmptyResponse() throws Exception {
-        Response<ResponseBody> response = binaryClient
+        Response<Optional<ResponseBody>> response = binaryClient
                 .getOptionalBinaryEmpty(AuthHeader.valueOf("authHeader")).execute();
         assertThat(response.code()).isEqualTo(204);
         assertThat(response.headers().get(HttpHeaders.CONTENT_TYPE)).isNull();
-        assertThat(response.body()).isNull();
+        assertThat(response.body()).isEmpty();
     }
 
     @Test
     public void testBinaryOptionalPresentResponse() throws Exception {
-        Response<ResponseBody> response = binaryClient
+        Response<Optional<ResponseBody>> response = binaryClient
                 .getOptionalBinaryPresent(AuthHeader.valueOf("authHeader")).execute();
         assertThat(response.code()).isEqualTo(200);
         assertThat(response.headers().get(HttpHeaders.CONTENT_TYPE)).startsWith("application/octet-stream");
-        assertThat(response.body().string()).isEqualTo("Hello World!");
+        assertThat(response.body().get().string()).isEqualTo("Hello World!");
     }
 
     @Test

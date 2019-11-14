@@ -1,6 +1,7 @@
 package com.palantir.product;
 
 import com.palantir.tokens.auth.AuthHeader;
+import java.util.Optional;
 import javax.annotation.Generated;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -23,13 +24,13 @@ public interface EteBinaryServiceRetrofit {
 
     @GET("./binary/optional/present")
     @Headers({"hr-path-template: /binary/optional/present", "Accept: application/octet-stream"})
-    @Streaming
-    Call<ResponseBody> getOptionalBinaryPresent(@Header("Authorization") AuthHeader authHeader);
+    Call<Optional<ResponseBody>> getOptionalBinaryPresent(
+            @Header("Authorization") AuthHeader authHeader);
 
     @GET("./binary/optional/empty")
     @Headers({"hr-path-template: /binary/optional/empty", "Accept: application/octet-stream"})
-    @Streaming
-    Call<ResponseBody> getOptionalBinaryEmpty(@Header("Authorization") AuthHeader authHeader);
+    Call<Optional<ResponseBody>> getOptionalBinaryEmpty(
+            @Header("Authorization") AuthHeader authHeader);
 
     /** Throws an exception after partially writing a binary response. */
     @GET("./binary/failure")

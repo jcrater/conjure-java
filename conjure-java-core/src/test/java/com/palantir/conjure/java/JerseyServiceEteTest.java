@@ -180,24 +180,27 @@ public final class JerseyServiceEteTest extends TestBase {
 
     @Test
     public void test_optionalBinary_present() throws IOException {
-        Response<ResponseBody> response = binary.getOptionalBinaryPresent(AuthHeader.valueOf("authHeader")).execute();
+        Response<Optional<ResponseBody>> response = binary.getOptionalBinaryPresent(AuthHeader.valueOf("authHeader"))
+                .execute();
         assertThat(response.code()).isEqualTo(200);
         assertThat(response.headers().get(HttpHeaders.CONTENT_TYPE)).startsWith("application/octet-stream");
-        assertThat(response.body().string()).isEqualTo("Hello World!");
+        assertThat(response.body().get().string()).isEqualTo("Hello World!");
     }
 
     @Test
     public void test_optionalBinary_empty() throws IOException {
-        Response<ResponseBody> response = binary.getOptionalBinaryEmpty(AuthHeader.valueOf("authHeader")).execute();
+        Response<Optional<ResponseBody>> response = binary.getOptionalBinaryEmpty(AuthHeader.valueOf("authHeader"))
+                .execute();
         assertThat(response.code()).isEqualTo(204);
         assertThat(response.headers().get(HttpHeaders.CONTENT_TYPE)).isNull();
-        assertThat(response.body()).isNull();
+        assertThat(response.body()).isEmpty();
     }
 
     @BeforeAll
     public static void beforeClass() throws IOException {
         ConjureDefinition def = Conjure.parse(
-                ImmutableList.of(new File("src/test/resources/ete-service.yml"),
+                ImmutableList.of(
+                        new File("src/test/resources/ete-service.yml"),
                         new File("src/test/resources/ete-binary.yml")));
         List<Path> files = new JerseyServiceGenerator(ImmutableSet.of(FeatureFlags.RequireNotNullAuthAndBodyParams))
                 .emit(def, folder);
